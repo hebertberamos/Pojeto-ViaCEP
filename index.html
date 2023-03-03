@@ -20,42 +20,51 @@
         </nav>
     </header>
     <main>
-        <section id="form-section">
-            <div>
-                <form action="newAdress">
-                    <div>
+        <section id="form-section" class="form-container">
+            <div class="card-form">
+                <form name="newAdress">
+                    <div class="form-control">
                         <label for="cep"></label>
                         <input
                         name="cep"
                         id="cep"
                         type="text"
-                        placeholder="CEP">
+                        placeholder="CEP"
+                        class="input-form">
+                        <div class="error-message">Campo requerido</div>
                     </div>
-                    <div>
+                    <div class="form-control">
                         <label for="street"></label>
                         <input 
                         name="street" 
                         id="street" 
                         type="text" 
-                        placeholder="Logradouro">
+                        placeholder="Logradouro"
+                        class="input-form"
+                        disabled>
                     </div>
-                    <div>
+                    <div class="form-control">
                         <label for="number"></label>
                         <input 
                         name="number" 
                         id="number" 
                         type="text"
-                        placeholder="Número">
+                        placeholder="Número"
+                        class="input-form">
+                        <div class="error-message">Campo requerido</div>
                     </div>
-                    <div>
+                    <div class="form-form">
                         <label for="cite"></label>
                         <input
                          name="cite" 
                          id="cite" 
                          type="text"
-                         placeholder="Cidade">
+                         placeholder="Cidade"
+                         class="input-form"
+                         disabled
+                         >
                     </div>
-                    <div>
+                    <div class="card-buttom-form">
                         <button type="submit">Salvar</button>
                         <button type="reset">Limpar</button>
                     </div>
