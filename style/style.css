@@ -90,4 +90,33 @@ html,body{
     width: 45%;
     border-radius: 4px;
     border: none;
+    cursor: pointer;
+}
+
+.list-container{
+    padding: 0 20px;
+}
+
+.card-list-item{
+    background-color: #333333;
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.card-list-item h3{
+    color: #FF8400;
+    font-size: 18px;
+}
+
+.card-list-item p{
+    color: white;
+    font-size: 14px;
+}
+
+.inforamtion-cep{
+    color: #8F8F8F;
+    font-size: 12px;
 }
