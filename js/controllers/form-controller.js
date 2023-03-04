@@ -1,4 +1,9 @@
+import Address from '../address/address.js';
+
 function Stage() {
+
+    this.Address = new Address();
+
     this.inputCep = null;
     this.inputStreet = null;
     this.inputNumber = null;
