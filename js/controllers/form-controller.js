@@ -37,14 +37,25 @@ export function init(){
 function handleInputNumberChange(event){
     if(event.target.value == ""){
         setFormError("number", "Campo obrigatório");
+        changeClassInput("#number", "uninformed")
     }
     else{
         setFormError("number", "");
+        removeClassInput("#number", "uninformed");
     }
 }
-
 
 function setFormError(key, value){
     const element = document.querySelector(`[data-error=${key}]`);
     element.innerHTML = value;
+}
+
+function changeClassInput(key, valueClass){
+    const element = document.querySelector(`${key}`);
+    element.classList.add(valueClass);
+}
+
+function removeClassInput(key, valueClass){
+    const element = document.querySelector(`${key}`);
+    element.classList.remove(valueClass);
 }
