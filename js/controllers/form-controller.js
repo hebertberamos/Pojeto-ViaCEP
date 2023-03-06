@@ -32,6 +32,26 @@ export function init(){
     stage.errorNumber = document.querySelector('[data-error="number"]');
 
     stage.inputNumber.addEventListener('change', handleInputNumberChange);
+    stage.btnClear.addEventListener('click', handleBtnClearClirck);
+}
+
+function handleBtnClearClirck(event){
+    event.preventDefault();
+    clearForm();
+    setFormError("cep", "");
+    setFormError("number", "");
+
+    removeClassInput("#cep", "uninformed");
+    removeClassInput("#number", "uninformed");
+
+    stage.inputCep.focus();
+}
+
+function clearForm(){
+    stage.inputCep.value = "";
+    stage.inputStreet.value = "";
+    stage.inputNumber.value = "";
+    stage.inputCity.value= "";
 }
 
 function handleInputNumberChange(event){
