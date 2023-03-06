@@ -120,3 +120,11 @@ html,body{
     color: #8F8F8F;
     font-size: 12px;
 }
+
+.uninformed{
+    background-color: rgb(243, 137, 137);
+}
+
+.uninformed::placeholder{
+    color: white;
+}
