@@ -1,4 +1,5 @@
 import Address from '../address/address.js';
+import * as requestService from '../services/request-service.js';
 
 function Stage() {
 
@@ -32,10 +33,17 @@ export function init(){
     stage.errorNumber = document.querySelector('[data-error="number"]');
 
     stage.inputNumber.addEventListener('change', handleInputNumberChange);
-    stage.btnClear.addEventListener('click', handleBtnClearClirck);
+    stage.btnClear.addEventListener('click', handleBtnClearClick);
+    stage.btnSave.addEventListener('click', handleBtnSaveClick);
 }
 
-function handleBtnClearClirck(event){
+async function handleBtnSaveClick(event){
+    event.preventDefault();
+    const result = await requestService.getJson('https://viacep.com.br/ws/01001000/json/');
+    console.log(result);
+}
+
+function handleBtnClearClick(event){
     event.preventDefault();
     clearForm();
     setFormError("cep", "");
