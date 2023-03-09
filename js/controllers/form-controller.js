@@ -1,7 +1,7 @@
 import Address from '../address/address.js';
-import * as requestService from '../services/request-service.js';
+import * as addressService from '../services/address-service.js';
 
-function Stage() {
+function State() {
 
     this.Address = new Address();
 
@@ -17,30 +17,50 @@ function Stage() {
     this.errorNumber = null;
 }
 
-const stage = new Stage();
+const state = new State();
 
 
 export function init(){
-    stage.inputCep = document.forms.newAdress.cep;
-    stage.inputStreet = document.forms.newAdress.street;
-    stage.inputNumber = document.forms.newAdress.number;
-    stage.inputCity = document.forms.newAdress.city;
+    state.inputCep = document.forms.newAdress.cep;
+    state.inputStreet = document.forms.newAdress.street;
+    state.inputNumber = document.forms.newAdress.number;
+    state.inputCity = document.forms.newAdress.city;
 
-    stage.btnSave = document.forms.newAdress.btnSave;
-    stage.btnClear = document.forms.newAdress.btnClear;
+    state.btnSave = document.forms.newAdress.btnSave;
+    state.btnClear = document.forms.newAdress.btnClear;
 
-    stage.errorCep = document.querySelector('[data-error="cep"]');
-    stage.errorNumber = document.querySelector('[data-error="number"]');
+    state.errorCep = document.querySelector('[data-error="cep"]');
+    state.errorNumber = document.querySelector('[data-error="number"]');
 
-    stage.inputNumber.addEventListener('change', handleInputNumberChange);
-    stage.btnClear.addEventListener('click', handleBtnClearClick);
-    stage.btnSave.addEventListener('click', handleBtnSaveClick);
+    state.inputCep = addEventListener('change', handleInputCepChange);
+    state.inputNumber.addEventListener('change', handleInputNumberChange);
+    state.btnClear.addEventListener('click', handleBtnClearClick);
+    state.btnSave.addEventListener('click', handleBtnSaveClick);
+}
+
+async function handleInputCepChange(event){
+    const cep = event.target.value;
+    try{
+        const address = await addressService.findByCep(cep);
+        state.inputCity.value = address.city;
+        state.inputStreet.value = address.street;
+        state.address = address;
+
+        setFormError("cep", "");
+        removeClassInput("#cep", "uninformed");
+        state.inputNumber.focus();
+    }
+    catch(e){
+        state.inputCity.value = "";
+        state.inputStreet.value = "";
+        setFormError('cep', "Informe um CEP válido");
+        changeClassInput('#cep', "uninformed");
+    }
 }
 
 async function handleBtnSaveClick(event){
     event.preventDefault();
-    const result = await requestService.getJson('https://viacep.com.br/ws/01001000/json/');
-    console.log(result);
+    console.log(event.target);
 }
 
 function handleBtnClearClick(event){
@@ -52,14 +72,14 @@ function handleBtnClearClick(event){
     removeClassInput("#cep", "uninformed");
     removeClassInput("#number", "uninformed");
 
-    stage.inputCep.focus();
+    state.inputCep.focus();
 }
 
 function clearForm(){
-    stage.inputCep.value = "";
-    stage.inputStreet.value = "";
-    stage.inputNumber.value = "";
-    stage.inputCity.value= "";
+    state.inputCep.value = "";
+    state.inputStreet.value = "";
+    state.inputNumber.value = "";
+    state.inputCity.value= "";
 }
 
 function handleInputNumberChange(event){
