@@ -34,14 +34,39 @@ export function init(){
     
     state.inputCep.addEventListener('change', handleInputCepChange);
     state.inputNumber.addEventListener('change', handleInputNumberChange);
+    state.inputNumber.addEventListener('keyup', handleInputNumberKeyup);
     state.btnClear.addEventListener('click', handleBtnClearClick);
     state.btnSave.addEventListener('click', handleBtnSaveClick);
 }
 
+function handleInputNumberKeyup(event){
+    state.address.number = state.inputNumber.value
+}
+
 async function handleInputCepChange(event){
     const cep = event.target.value;
-    const result = await addressService.findByCep(cep);
-    state.address = result;
+    try{
+        const address = await addressService.findByCep(cep);
+        state.inputStreet.value = address.street;
+        state.inputCity.value = address.city;
+        state.address = address;
+        setFormError("cep", "");
+        removeClassInput("#cep", "uninformed");
+    }
+    catch(e){
+        if(event.target.value == ""){
+            setFormError("cep", "Campo obrigatório");
+            changeClassInput("#cep", "uninformed");
+            state.inputCity.value = "";
+            state.inputStreet.value = "";
+        }
+        else{
+            setFormError("cep", "CEP inválido");
+            changeClassInput("#cep", "uninformed");
+            state.inputCity.value = "";
+            state.inputStreet.value = "";
+        }
+    }
 }
 
 async function handleBtnSaveClick(event){
