@@ -53,8 +53,14 @@ async function handleInputCepChange(event){
     catch(e){
         state.inputCity.value = "";
         state.inputStreet.value = "";
-        setFormError('cep', "Informe um CEP válido");
-        changeClassInput('#cep', "uninformed");
+        if(cep == ""){
+            setFormError('cep', "Campo obrigatório");
+            changeClassInput('#cep', "uninformed");
+        }
+        else{
+            setFormError('cep', "Informe um CEP válido");
+            changeClassInput('#cep', "uninformed");
+        }
     }
 }
 
