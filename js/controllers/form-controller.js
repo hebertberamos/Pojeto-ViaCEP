@@ -39,29 +39,30 @@ export function init(){
 }
 
 async function handleInputCepChange(event){
-    const cep = event.target.value;
-    try{
-        const address = await addressService.findByCep(cep);
-        state.inputCity.value = address.city;
-        state.inputStreet.value = address.street;
-        state.address = address;
+    // const cep = event.target.value;
+    // console.log(cep);
+    // try{
+    //     const address = await addressService.findByCep(cep);
+    //     state.inputCity.value = address.city;
+    //     state.inputStreet.value = address.street;
+    //     state.address = address;
 
-        setFormError("cep", "");
-        removeClassInput("#cep", "uninformed");
-        state.inputNumber.focus();
-    }
-    catch(e){
-        state.inputCity.value = "";
-        state.inputStreet.value = "";
-        if(cep == ""){
-            setFormError('cep', "Campo obrigatório");
-            changeClassInput('#cep', "uninformed");
-        }
-        else{
-            setFormError('cep', "Informe um CEP válido");
-            changeClassInput('#cep', "uninformed");
-        }
-    }
+    //     setFormError("cep", "");
+    //     removeClassInput("#cep", "uninformed");
+    //     state.inputNumber.focus();
+    // }
+    // catch(e){
+    //     state.inputCity.value = "";
+    //     state.inputStreet.value = "";
+    //     if(cep == ""){
+    //         setFormError('cep', "Campo obrigatório");
+    //         changeClassInput('#cep', "uninformed");
+    //     }
+    //     else{
+    //         setFormError('cep', "Informe um CEP válido");
+    //         changeClassInput('#cep', "uninformed");
+    //     }
+    // }
 }
 
 async function handleBtnSaveClick(event){
