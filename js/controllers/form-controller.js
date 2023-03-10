@@ -3,7 +3,7 @@ import * as addressService from '../services/address-service.js';
 
 function State() {
 
-    this.Address = new Address();
+    this.address = new Address();
 
     this.inputCep = null;
     this.inputStreet = null;
@@ -31,42 +31,47 @@ export function init(){
 
     state.errorCep = document.querySelector('[data-error="cep"]');
     state.errorNumber = document.querySelector('[data-error="number"]');
-
-    state.inputCep = addEventListener('change', handleInputCepChange);
+    
+    state.inputCep.addEventListener('change', handleInputCepChange);
     state.inputNumber.addEventListener('change', handleInputNumberChange);
+    state.inputNumber.addEventListener('keyup', handleInputNumberKeyup);
     state.btnClear.addEventListener('click', handleBtnClearClick);
     state.btnSave.addEventListener('click', handleBtnSaveClick);
+}
+
+function handleInputNumberKeyup(event){
+    state.address.number = state.inputNumber.value
 }
 
 async function handleInputCepChange(event){
     const cep = event.target.value;
     try{
         const address = await addressService.findByCep(cep);
-        state.inputCity.value = address.city;
         state.inputStreet.value = address.street;
+        state.inputCity.value = address.city;
         state.address = address;
-
         setFormError("cep", "");
         removeClassInput("#cep", "uninformed");
-        state.inputNumber.focus();
     }
     catch(e){
-        state.inputCity.value = "";
-        state.inputStreet.value = "";
-        if(cep == ""){
-            setFormError('cep', "Campo obrigatório");
-            changeClassInput('#cep', "uninformed");
+        if(event.target.value == ""){
+            setFormError("cep", "Campo obrigatório");
+            changeClassInput("#cep", "uninformed");
+            state.inputCity.value = "";
+            state.inputStreet.value = "";
         }
         else{
-            setFormError('cep', "Informe um CEP válido");
-            changeClassInput('#cep', "uninformed");
+            setFormError("cep", "CEP inválido");
+            changeClassInput("#cep", "uninformed");
+            state.inputCity.value = "";
+            state.inputStreet.value = "";
         }
     }
 }
 
 async function handleBtnSaveClick(event){
     event.preventDefault();
-    console.log(event.target);
+    console.log(state.address);
 }
 
 function handleBtnClearClick(event){
