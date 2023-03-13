@@ -70,9 +70,22 @@ async function handleInputCepChange(event){
     }
 }
 
-async function handleBtnSaveClick(event){
+function handleBtnSaveClick(event){
     event.preventDefault();
-    listController.addCart(state.address);
+
+    const errors = addressService.getErrors(state.address);
+
+    const keys = Object.keys(errors);
+    if(keys.length > 0){
+        for(let i=0;i<keys.length;i++){
+            setFormError(keys[i], errors[keys[i]]);
+        }
+    }
+    else{
+        listController.addCart(state.address);
+        clearForm();
+        state.inputCep.focus();
+    }
 }
 
 function handleBtnClearClick(event){
@@ -92,6 +105,8 @@ function clearForm(){
     state.inputStreet.value = "";
     state.inputNumber.value = "";
     state.inputCity.value= "";
+
+    state.address = new Address();
 }
 
 function handleInputNumberChange(event){
